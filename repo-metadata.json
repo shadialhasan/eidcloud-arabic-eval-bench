@@ -1,0 +1,12 @@
+{
+  "description": "Standardized Arabic AI evaluation suite assessing LLMs on JSON extraction, grammar, and morphology in pure PHP",
+  "topics": [
+    "eidcloud",
+    "arabic-ai",
+    "arabic-nlp",
+    "llm-evaluation",
+    "arabic-benchmark",
+    "der-wer-metrics",
+    "php8"
+  ]
+}

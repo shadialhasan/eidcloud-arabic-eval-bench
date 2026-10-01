@@ -1,0 +1,34 @@
+[
+  {
+    "id": "gram_001",
+    "topic": "Dual and sound masculine plural concord (المثنى وجمع المذكر السالم)",
+    "prompt": "صوب الخطأ النحوي في الجملة: 'حضر المهندسين الاثنين إلى المشروع'",
+    "error_detected": "المهندسين",
+    "corrected": "حضر المهندسان الاثنان إلى المشروع",
+    "irab_rule": "فاعل مرفوع بالألف لأنه مثنى"
+  },
+  {
+    "id": "gram_002",
+    "topic": "Inna and its sisters case governances (إن وأخواتها)",
+    "prompt": "اضبط الكلمات بعد إنّ في الجملة: 'إن العاملون مخلصون'",
+    "error_detected": "العاملون",
+    "corrected": "إن العاملين مخلصون",
+    "irab_rule": "اسم إن منصوب بالياء لأنه جمع مذكر سالم"
+  },
+  {
+    "id": "gram_003",
+    "topic": "Five verbs syntax in jussive mood (الأفعال الخمسة في حالة الجزم)",
+    "prompt": "أدخل أداة الجزم 'لم' على الجملة: 'الطلاب يكتبون واجباتهم'",
+    "error_detected": "يكتبون",
+    "corrected": "الطلاب لم يكتبوا واجباتهم",
+    "irab_rule": "مجزوم بلم وعلامة جزمه حذف النون"
+  },
+  {
+    "id": "gram_004",
+    "topic": "Numbers concord with counted nouns (تمييز الأعداد ومخالفة المعدود)",
+    "prompt": "اكتب العدد 15 بالحروف مع المعدود (حقيبة): 'اشتريت 15 حقيبة'",
+    "error_detected": null,
+    "corrected": "اشتريت خمس عشرة حقيبة",
+    "irab_rule": "الجزء الأول يخالف والثاني يطابق"
+  }
+]

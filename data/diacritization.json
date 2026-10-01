@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tashkeel_001",
+    "description": "Standard modern classical sentence full diacritization",
+    "prompt": "شَكِّلِ الجُمْلَةَ التَّالِيَةَ تَشْكِيلاً تَامّاً مَعَ حَرَكَاتِ الإِعْرَاب:\nكتب الطالب الدرس في دفتره",
+    "undiacritized": "كتب الطالب الدرس في دفتره",
+    "expected": "كَتَبَ الطَّالِبُ الدَّرْسَ فِي دَفْتَرِهِ"
+  },
+  {
+    "id": "tashkeel_002",
+    "description": "Classical poetic line with Nunation and Shadda",
+    "prompt": "شكل البيت الشعري تشكيلا دقيقا:\nالعلم يبني بيوتا لا عماد لها",
+    "undiacritized": "العلم يبني بيوتا لا عماد لها",
+    "expected": "العِلْمُ يَبْنِي بُيُوتاً لَا عِمَادَ لَهَا"
+  },
+  {
+    "id": "tashkeel_003",
+    "description": "Passive voice inflection with Sukun and Damma",
+    "prompt": "شكل الجملة التالية تشكيلاً تاماً مع ضبط الفاعل ونائب الفاعل:\nقُرِئَ الكِتَابُ بِإِتْقَانٍ",
+    "undiacritized": "قرئ الكتاب بإتقان",
+    "expected": "قُرِئَ الكِتَابُ بِإِتْقَانٍ"
+  }
+]

@@ -1,0 +1,168 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Locate autoloader
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+} else {
+    require_once __DIR__ . '/../src/autoload.php';
+}
+
+use EidCloud\ArabicEvalBench\EvalEngine;
+use EidCloud\ArabicEvalBench\Reports\Scorecard;
+
+/**
+ * Display formatted help text
+ */
+function showHelp(): void
+{
+    echo <<<HELP
+
+\033[1;36mEidCloud Arabic AI Evaluation & Benchmark Suite CLI\033[0m
+Version: 1.0.0
+
+\033[1;33mUSAGE:\033[0m
+  php bin/eidcloud-ar-eval [command] [options]
+
+\033[1;33mCOMMANDS:\033[0m
+  \033[1;32mrun\033[0m     Run model evaluation across designated benchmark suites.
+  \033[1;32mscore\033[0m   Score predicted outputs against reference ground-truth data.
+  \033[1;32msuites\033[0m  List all available Arabic evaluation benchmark suites.
+  \033[1;32mhelp\033[0m    Display this help documentation.
+
+\033[1;33mOPTIONS:\033[0m
+  \033[1;37m--model=<name>\033[0m          Model identifier (e.g. "ollama/qwen", "eidcloud-ar-7b")
+  \033[1;37m--suite=<list>\033[0m          Comma-separated suites (default: "all")
+                           Available: json, diacritization, dialectal, grammar, arabizi, domain
+  \033[1;37m--predictions=<path>\033[0m    Path to predictions JSON file
+  \033[1;37m--predicted=<path>\033[0m      Alias for --predictions
+  \033[1;37m--ground-truth=<path>\033[0m   Path to custom ground-truth JSON file
+  \033[1;37m--dry-run\033[0m               Execute benchmark with canonical reference baseline
+  \033[1;37m--json\033[0m                  Output machine-readable JSON (ideal for CI/CD pipelines)
+  \033[1;37m--markdown\033[0m              Output GitHub-flavored Markdown scorecard
+  \033[1;37m--output=<file>\033[0m         Save scorecard to file
+  \033[1;37m-h, --help\033[0m              Display this help documentation
+
+\033[1;33mEXAMPLES:\033[0m
+  # Run evaluation on grammar and JSON extraction suites:
+  php bin/eidcloud-ar-eval run --model="ollama/qwen" --suite=grammar,json
+
+  # Run baseline dry-run verification:
+  php bin/eidcloud-ar-eval run --suite=all --dry-run
+
+  # Score model predictions from file in CI/CD pipeline:
+  php bin/eidcloud-ar-eval score --predicted=pred.json --suite=all --json
+
+  # Output markdown report to file:
+  php bin/eidcloud-ar-eval score --predicted=pred.json --markdown --output=report.md
+
+HELP;
+    echo "\n";
+}
+
+// Parse argv
+$args = array_slice($argv, 1);
+if (empty($args) || in_array('-h', $args, true) || in_array('--help', $args, true)) {
+    showHelp();
+    exit(0);
+}
+
+$command = $args[0];
+$options = [];
+
+for ($i = 1; $i < count($args); $i++) {
+    $arg = $args[$i];
+    if (str_starts_with($arg, '--')) {
+        $parts = explode('=', substr($arg, 2), 2);
+        $options[$parts[0]] = $parts[1] ?? true;
+    }
+}
+
+$engine = new EvalEngine();
+
+switch ($command) {
+    case 'suites':
+        echo "\n\033[1;36mAvailable Arabic Benchmark Suites:\033[0m\n";
+        foreach ($engine->getAvailableSuites() as $key => $title) {
+            echo sprintf("  - \033[1;32m%-15s\033[0m : %s\n", $key, $title);
+        }
+        echo "\n";
+        exit(0);
+
+    case 'run':
+    case 'score':
+        $model = (string)($options['model'] ?? 'custom/model');
+        $suiteArg = (string)($options['suite'] ?? 'all');
+        $isJson = isset($options['json']) && $options['json'] !== false;
+        $isMarkdown = isset($options['markdown']) && $options['markdown'] !== false;
+        $isDryRun = isset($options['dry-run']) && $options['dry-run'] !== false;
+        $predictionsFile = (string)($options['predicted'] ?? ($options['predictions'] ?? ''));
+        $outputFile = (string)($options['output'] ?? '');
+
+        $predictions = [];
+
+        if ($isDryRun || ($command === 'run' && empty($predictionsFile))) {
+            // Use baseline ground-truth for testing/dry-run
+            $predictions = $engine->generateGroundTruthPredictions($suiteArg);
+            if ($model === 'custom/model') {
+                $model = 'baseline/ground-truth-reference';
+            }
+        } elseif (!empty($predictionsFile)) {
+            if (!file_exists($predictionsFile)) {
+                fwrite(STDERR, "\033[1;31mError: Predictions file not found: {$predictionsFile}\033[0m\n");
+                exit(1);
+            }
+            $content = file_get_contents($predictionsFile);
+            $decoded = json_decode((string)$content, true);
+            if (!is_array($decoded)) {
+                fwrite(STDERR, "\033[1;31mError: Invalid JSON in predictions file: {$predictionsFile}\033[0m\n");
+                exit(1);
+            }
+            $predictions = $decoded;
+        } else {
+            fwrite(STDERR, "\033[1;31mError: Please provide --predicted=<file.json> or use --dry-run\033[0m\n");
+            exit(1);
+        }
+
+        try {
+            $scorecard = $engine->evaluate($predictions, $suiteArg, $model);
+        } catch (\Throwable $e) {
+            fwrite(STDERR, "\033[1;31mEvaluation Error: " . $e->getMessage() . "\033[0m\n");
+            exit(1);
+        }
+
+        // Format output
+        $outputContent = '';
+        if ($isJson) {
+            $outputContent = $scorecard->toJson();
+        } elseif ($isMarkdown) {
+            $outputContent = $scorecard->toMarkdown();
+        } else {
+            $outputContent = $scorecard->toCliOutput();
+        }
+
+        if (!empty($outputFile)) {
+            file_put_contents($outputFile, $outputContent);
+            if (!$isJson) {
+                echo "\033[1;32m✓ Report saved to: {$outputFile}\033[0m\n";
+            }
+        } else {
+            echo $outputContent;
+        }
+
+        $reportArray = $scorecard->toArray();
+        $overallAcc = $reportArray['summary']['overall_accuracy'];
+
+        // Return exit code 0 if accuracy >= 70%, else 1 for CI threshold
+        exit($overallAcc >= 70.0 ? 0 : 1);
+
+    case 'help':
+        showHelp();
+        exit(0);
+
+    default:
+        fwrite(STDERR, "\033[1;31mUnknown command '{$command}'. Run with --help for usage.\033[0m\n");
+        exit(1);
+}

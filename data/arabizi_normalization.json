@@ -1,0 +1,26 @@
+[
+  {
+    "id": "arabizi_001",
+    "description": "Common Egyptian/Levantine Arabizi greeting transliteration",
+    "arabizi": "ezayak ya 7abibi kef el 7al",
+    "prompt": "حول النص المكتوب بالعربيزي (الفرانكو آراب) إلى العربية الفصحى:\nezayak ya 7abibi kef el 7al",
+    "expected_arabic": "إزيك يا حبيبي كيف الحال",
+    "keywords": ["حبيبي", "الحال"]
+  },
+  {
+    "id": "arabizi_002",
+    "description": "Arabizi with numerals 3 (ع), 7 (ح), 2 (ء/ق)",
+    "arabizi": "ana fe el share3 mestany el so7ab",
+    "prompt": "حول إلى العربية السليمة:\nana fe el share3 mestany el so7ab",
+    "expected_arabic": "أنا في الشارع مستني الصحاب",
+    "keywords": ["الشارع", "الصحاب"]
+  },
+  {
+    "id": "arabizi_003",
+    "description": "Arabizi question with 5 (خ)",
+    "arabizi": "5alasna el sho8l w raye7 el bet",
+    "prompt": "حول إلى العربية:\n5alasna el sho8l w raye7 el bet",
+    "expected_arabic": "خلصنا الشغل ورايح البيت",
+    "keywords": ["خلصنا", "الشغل", "البيت"]
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "json_001",
+    "description": "Invoice data extraction from unstructured Arabic receipt",
+    "prompt": "استخرج بيانات الفاتورة التالية في شكل JSON:\nتم شراء عدد 3 حواسيب محمولة من شركة الأمل للتجارة بقيمة إجمالية 15000 ريال سعودي بتاريخ 2026-05-15، ودفعت نقداً بواسطة أحمد محمد.",
+    "schema": {
+      "merchant": "string",
+      "items_count": "integer",
+      "total_amount": "number",
+      "currency": "string",
+      "payment_method": "string",
+      "buyer": "string",
+      "date": "string"
+    },
+    "expected": {
+      "merchant": "شركة الأمل للتجارة",
+      "items_count": 3,
+      "total_amount": 15000,
+      "currency": "ريال سعودي",
+      "payment_method": "نقداً",
+      "buyer": "أحمد محمد",
+      "date": "2026-05-15"
+    }
+  },
+  {
+    "id": "json_002",
+    "description": "Extracting medical patient appointment info from Arabic doctor note",
+    "prompt": "قم بتحويل الملاحظة الطبية إلى كائن JSON:\nالمريض خالد العتيبي، العمر 45 سنة، يشكو من صداع نصفي حاد منذ 4 أيام. ضغط الدم 125/80. موعد المراجعة القادم يوم الأحد القادم.",
+    "schema": {
+      "patient_name": "string",
+      "age": "integer",
+      "symptom": "string",
+      "duration_days": "integer",
+      "blood_pressure": "string"
+    },
+    "expected": {
+      "patient_name": "خالد العتيبي",
+      "age": 45,
+      "symptom": "صداع نصفي حاد",
+      "duration_days": 4,
+      "blood_pressure": "125/80"
+    }
+  },
+  {
+    "id": "json_003",
+    "description": "Extract flight booking flight itinerary details in Arabic",
+    "prompt": "استخرج تفاصيل الحجز التالي في كائن JSON:\nتم تأكيد رحلتكم رقم SV1234 من الرياض (RUH) إلى دبي (DXB) على درجة الأعمال بتاريخ 2026-11-20 الساعة 09:30 صباحاً لراكبين.",
+    "schema": {
+      "flight_number": "string",
+      "origin": "string",
+      "destination": "string",
+      "cabin_class": "string",
+      "date": "string",
+      "passengers": "integer"
+    },
+    "expected": {
+      "flight_number": "SV1234",
+      "origin": "الرياض",
+      "destination": "دبي",
+      "cabin_class": "درجة الأعمال",
+      "date": "2026-11-20",
+      "passengers": 2
+    }
+  }
+]

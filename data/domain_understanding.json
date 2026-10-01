@@ -1,0 +1,32 @@
+[
+  {
+    "id": "domain_001",
+    "domain": "Financial",
+    "description": "Venture capital and investment Arabic terminologies",
+    "prompt": "ما المصطلح العربي المعتمد في المالية والاستثمار لكل من: 'Due Diligence' و 'EBITDA' و 'Burn Rate'؟",
+    "expected_terms": {
+      "due_diligence": "الفحص النافي للجهالة",
+      "ebitda": "الأرباح قبل الفوائد والضرائب والإهلاك والاستهلاك",
+      "burn_rate": "معدل الحرق المالي"
+    }
+  },
+  {
+    "id": "domain_002",
+    "domain": "Legal",
+    "description": "Contractual legal arbitration clause understanding",
+    "prompt": "ما المعنى القانوني للمصطلح 'الشرط الفاسخ الصريح' في عقود المعاملات المدنية والتجارية؟",
+    "expected_keywords": ["انفساخ العقد", "دون حاجة لحكم قضائي", "إعذار"],
+    "summary": "بند يقضي بانفساخ العقد تلقائياً بمجرد إخلال أحد الطرفين دون حاجة لحكم قضائي أو إعذار"
+  },
+  {
+    "id": "domain_003",
+    "domain": "Technical / AI",
+    "description": "Arabic AI & Deep Learning accurate terminology translation",
+    "prompt": "ترجم المصطلحات التقنية التالية بدقة للمصطلح العربي الشائع في أبحاث الذكاء الاصطناعي: 'Overfitting', 'Transformer Architecture', 'Gradient Descent'.",
+    "expected_terms": {
+      "overfitting": "فرط التخصيص",
+      "transformer_architecture": "معمارية المحولات",
+      "gradient_descent": "الانحدار التدريجي"
+    }
+  }
+]

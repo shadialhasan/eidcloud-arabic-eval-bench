@@ -1,0 +1,37 @@
+{
+  "name": "eidcloud/arabic-eval-bench",
+  "description": "Standardized Arabic AI evaluation suite assessing LLMs on JSON extraction, grammar, and morphology in pure PHP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Eng. MHD. Shadi AL-Hasan",
+      "homepage": "https://github.com/shadi-alhasan"
+    }
+  ],
+  "require": {
+    "php": ">=8.2.0",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "EidCloud\\ArabicEvalBench\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "EidCloud\\ArabicEvalBench\\Tests\\": "tests/"
+    }
+  },
+  "bin": [
+    "bin/eidcloud-ar-eval"
+  ],
+  "scripts": {
+    "test": "php tests/run_tests.php"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable"
+}

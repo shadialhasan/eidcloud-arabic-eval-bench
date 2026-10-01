@@ -1,0 +1,34 @@
+[
+  {
+    "id": "dialect_001",
+    "dialect": "Levantine (شامي)",
+    "description": "Comprehending Levantine everyday idiom and intent",
+    "prompt": "ما المعنى الدقيق للعبارة الشامية: 'شو عم تعمل هلأ؟'",
+    "expected_meaning": "ماذا تفعل الآن؟",
+    "expected_intent": "asking_current_activity"
+  },
+  {
+    "id": "dialect_002",
+    "dialect": "Egyptian (مصري)",
+    "description": "Egyptian colloquial expression mapping to Standard Arabic",
+    "prompt": "حول التعبير المصري التالي إلى الفصحى: 'إيه الأخبار يا باشا؟'",
+    "expected_meaning": "ما هي الأخبار يا سيدي؟",
+    "expected_intent": "greeting_and_status_inquiry"
+  },
+  {
+    "id": "dialect_003",
+    "dialect": "Gulf (خليجي)",
+    "description": "Gulf phrase translation and idiomatic nuance",
+    "prompt": "ما معنى العبارة الخليجية: 'عساك على القوة؟'",
+    "expected_meaning": "أتمنى لك القوة والعافية",
+    "expected_intent": "well_wishing_and_encouragement"
+  },
+  {
+    "id": "dialect_004",
+    "dialect": "Maghrebi (مغاربي)",
+    "description": "Maghrebi Darija common question translation",
+    "prompt": "ترجم العبارة المغاربية إلى الفصحى: 'بزاف عليك'",
+    "expected_meaning": "كثير عليك",
+    "expected_intent": "expressing_excess"
+  }
+]
